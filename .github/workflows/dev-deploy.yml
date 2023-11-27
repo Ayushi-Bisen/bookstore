@@ -1,0 +1,17 @@
+on:
+  workflow_run:
+    types:
+      - completed
+    workflows:
+      - BuildAndTest
+
+
+name: DevDeploy
+run-name: Dev Deploy
+
+
+jobs:
+  dev_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Dummy(Todo) dev deployment successful"

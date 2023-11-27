@@ -1,0 +1,11 @@
+on:
+  workflow_dispatch:
+
+name: PromoteToProd
+run-name: Promote To Prod
+
+jobs:
+  deploy_prod:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Dummy(Todo) Promote to Prod"
