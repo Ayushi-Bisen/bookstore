@@ -18,11 +18,15 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("org.flywaydb:flyway-core:9.22.3")
 	implementation("org.postgresql:postgresql:42.7.0")
+	implementation("org.glassfish.jersey.media:jersey-media-multipart:3.1.3")
 	testImplementation(platform("org.junit:junit-bom:5.9.1"))
+	//implementation("org.glassfish.jersey.media:jersey-media-multipart:3.1.3")
 	testImplementation("org.junit.jupiter:junit-jupiter")
+	testImplementation("org.assertj:assertj-core:3.24.2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
