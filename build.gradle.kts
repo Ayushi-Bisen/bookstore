@@ -4,6 +4,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.4"
 	id("org.flywaydb.flyway") version "9.22.3"
 	id("jacoco")
+	id("jacoco-report-aggregation")
 }
 
 group = "com.project"
@@ -40,5 +41,13 @@ tasks.jacocoTestCoverageVerification {
 				minimum = "0.8".toBigDecimal()
 			}
 		}
+	}
+}
+
+tasks.jacocoTestReport {
+	reports {
+		xml.required = true
+		csv.required = true
+		html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
 	}
 }
