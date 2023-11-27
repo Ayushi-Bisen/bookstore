@@ -1,5 +1,10 @@
 on:
   workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: "commit to deploy to prod"
+        required: true
+        type: string
 
 name: PromoteToProd
 run-name: Promote To Prod
@@ -8,4 +13,4 @@ jobs:
   deploy_prod:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Dummy(Todo) Promote to Prod"
+      - run: echo "Dummy(Todo) Promote to Prod for commit ${{ inputs.commit_sha }}"
