@@ -33,6 +33,7 @@ tasks.withType<Test> {
 }
 
 tasks.jacocoTestCoverageVerification {
+	dependsOn(tasks.test)
 	violationRules {
 		rule {
 			limit {
@@ -45,6 +46,7 @@ tasks.jacocoTestCoverageVerification {
 }
 
 tasks.jacocoTestReport {
+	dependsOn(tasks.test)
 	reports {
 		xml.required = true
 		csv.required = true
