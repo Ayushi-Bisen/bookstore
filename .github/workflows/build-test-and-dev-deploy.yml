@@ -55,7 +55,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: bookstore:latest
+          tags: 419248/bookstore:${{ github.sha }}
 
   dev_deploy:
     runs-on: ubuntu-latest
