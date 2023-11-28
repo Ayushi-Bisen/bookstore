@@ -12,6 +12,7 @@ import java.util.Objects;
 public class UserEntity {
 
     @Id
+    @Column(name="id")
     String userid;
 
     String username,  name,  password;
@@ -25,5 +26,8 @@ public class UserEntity {
         this.name = name;
         this.phNo = phNo;
         this.password = password;
+    }
+
+    UserEntity() {
     }
 }

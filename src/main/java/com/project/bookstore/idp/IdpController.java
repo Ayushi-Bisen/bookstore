@@ -22,7 +22,7 @@ public class IdpController {
             UserResponse response = idpService.createUser(new User("", user.username, user.name, user.phNo, "pwd"));
             return ResponseEntity.ok(response);
         } catch (UserNameAlreadyTaken e) {
-            String body =  "\"errCode\": \"USERNAME_ALREADY_TAKEN\", \"message\":\"" + e.getMessage() + "\"";
+            String body =  "{\"errCode\": \"USERNAME_ALREADY_TAKEN\", \"message\":\"" + e.getMessage() + "\"}";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
         }
     }
