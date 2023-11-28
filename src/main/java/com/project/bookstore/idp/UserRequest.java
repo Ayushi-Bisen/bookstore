@@ -1,20 +1,22 @@
 package com.project.bookstore.idp;
 
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 public class UserRequest {
 
-    @NotNull(message = "The username is required.")
+    @Email
+    @NotBlank(message = "The username is required.")
     String username;
 
-    @NotNull(message = "The name is required.")
+    @NotBlank(message = "The name is required.")
     String name;
 
-    @NotNull(message = "The phone number is required.")
+    @NotBlank(message = "The phone number is required.")
+    @Pattern(regexp = "^[0-9]{10}$", message="Phone number is not valid")
     String phNo;
 
-    @NotNull(message = "The phone number is required.")
+    @NotBlank(message = "The password is required.")
     String password;
 
     public UserRequest(String username, String name, String phNo, String password) {
