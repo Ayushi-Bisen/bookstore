@@ -40,4 +40,35 @@ public class IDPControllerTest {
                 .andExpect(jsonPath("$.name").isString())
                 .andExpect(jsonPath("$.phNo").isString());
     }
+
+    private record UserWithoutUsername(String name, String phNo) { }
+
+    @Test
+    void createUserShouldReturnBadRequestWhenUsernameIsMissingInRequest() throws Exception {
+        UserWithoutUsername request = new UserWithoutUsername("Vineeth R", "7411419248");
+        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    private record UserWithoutName(String username, String phNo) { }
+
+    @Test
+    void createUserShouldReturnBadRequestWhenNameIsMissingInRequest() throws Exception {
+        UserWithoutName request = new UserWithoutName("Vineeth R", "7411419248");
+        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    private record UserWithoutPhoneNumber(String username, String name) { }
+
+    @Test
+    void createUserShouldReturnBadRequestWhenPhoneNumberIsMissingInRequest() throws Exception {
+        UserWithoutPhoneNumber request = new UserWithoutPhoneNumber("vin-450", "Vineeth R");
+        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
 }

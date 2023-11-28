@@ -24,6 +24,7 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("org.flywaydb:flyway-core:9.22.3")
 	implementation("org.postgresql:postgresql:42.7.0")
+	implementation("org.springframework.boot:spring-boot-starter-validation:3.0.6")
 	// https://mvnrepository.com/artifact/com.opencsv/opencsv
 	implementation("com.opencsv:opencsv:5.9")
 	implementation("org.glassfish.jersey.media:jersey-media-multipart:3.1.3")
