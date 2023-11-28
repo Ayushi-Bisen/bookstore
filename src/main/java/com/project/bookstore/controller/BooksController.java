@@ -2,10 +2,13 @@ package com.project.bookstore.controller;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.project.bookstore.BookService;
+import com.project.bookstore.dto.Book;
+import com.project.bookstore.dto.Books;
 import com.project.bookstore.entity.BooksEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +33,12 @@ public class BooksController {
                 .parse();
         bookService.addBooks(books);
         return null;
+    }
+
+    @GetMapping("books")
+    public ResponseEntity<Books> allBooks(){
+        List<Book> allBooks = bookService.getAllBooks();
+        return ResponseEntity.ok(new Books(allBooks));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.project.bookstore;
 
+import com.project.bookstore.dto.Book;
 import com.project.bookstore.entity.BooksEntity;
 import com.project.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,12 @@ public class BookService {
         {
             System.out.println(ex.getMessage());
         }
+    }
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll()
+                .stream()
+                .map(bookEntity -> new Book(bookEntity.getIsbn(),bookEntity.getAuthor(),bookEntity.getName(),bookEntity.getImageUrl(),bookEntity.getPrice(),bookEntity.getBooksAvailable(),bookEntity.getPublicationYear(),bookEntity.getDescription(),bookEntity.getRating()))
+                .toList();
+
     }
 }
