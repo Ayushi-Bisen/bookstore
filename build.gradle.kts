@@ -3,6 +3,8 @@ plugins {
 	id("org.springframework.boot") version "3.2.0"
 	id("io.spring.dependency-management") version "1.1.4"
 	id("org.flywaydb.flyway") version "9.22.3"
+	id("jacoco")
+	id("jacoco-report-aggregation")
 }
 
 group = "com.project"
@@ -34,4 +36,26 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.jacocoTestCoverageVerification {
+	dependsOn(tasks.test)
+	violationRules {
+		rule {
+			limit {
+				counter = "LINE"
+				value = "COVEREDRATIO"
+				minimum = "0.2".toBigDecimal()
+			}
+		}
+	}
+}
+
+tasks.jacocoTestReport {
+	dependsOn(tasks.test)
+	reports {
+		xml.required = true
+		csv.required = true
+		html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+	}
 }
