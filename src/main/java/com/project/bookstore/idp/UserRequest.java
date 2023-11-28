@@ -14,9 +14,13 @@ public class UserRequest {
     @NotNull(message = "The phone number is required.")
     String phNo;
 
-    public UserRequest(String username, String name, String phNo) {
+    @NotNull(message = "The phone number is required.")
+    String password;
+
+    public UserRequest(String username, String name, String phNo, String password) {
         this.username = username;
         this.name = name;
         this.phNo = phNo;
+        this.password = password;
     }
 }
