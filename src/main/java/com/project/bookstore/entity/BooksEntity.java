@@ -1,6 +1,5 @@
 package com.project.bookstore.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -10,23 +9,98 @@ import jakarta.persistence.Table;
 public class BooksEntity {
 
     @Id
-    Integer isbn;
+    private Integer isbn;
 
-    String author;
+    private String author;
 
-    String name;
+    private String name;
 
 
-    String imageUrl;
+    private String imageUrl;
 
-    Double price;
+    private Double price;
 
-    Integer booksAvailable;
+    public Integer getIsbn() {
+        return isbn;
+    }
 
-    String publicationYear;
+    public void setIsbn(Integer isbn) {
+        this.isbn = isbn;
+    }
 
-    String description;
+    public String getAuthor() {
+        return author;
+    }
 
-    Integer rating;
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getBooksAvailable() {
+        return booksAvailable;
+    }
+
+    public void setBooksAvailable(Integer booksAvailable) {
+        this.booksAvailable = booksAvailable;
+    }
+
+    public String getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(String publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    private Integer booksAvailable;
+
+    private String publicationYear;
+
+    private String description;
+
+    private Integer rating;
+
+
+
 }
 
