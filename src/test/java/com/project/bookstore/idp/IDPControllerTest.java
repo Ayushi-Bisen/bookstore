@@ -26,7 +26,7 @@ public class IDPControllerTest {
     @Test
     void testCreateUser() throws Exception {
         Mockito.when(idpService.createUser(new User("", "vinhruc@gmail", "Vineeth R", "7411419248", "pwd")))
-                .thenReturn(new User("1234", "vinhruc@gmail", "Vineeth R", "7411419248", "pwd"));
+                .thenReturn(new UserResponse("1234", "vinhruc@gmail", "Vineeth R", "7411419248"));
 
         User request = new User("", "vinhruc@gmail", "Vineeth R", "7411419248", "pwd");
         mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
