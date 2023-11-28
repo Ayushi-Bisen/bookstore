@@ -40,6 +40,18 @@ public class IDPControllerTest {
                 .andExpect(jsonPath("$.phNo").isString());
     }
 
+    @Test
+    void testCreateUserShouldReturnBadRequestAndUSERNAME_ALREADY_TAKENErrorCodeInResponse() throws Exception {
+        Mockito.when(idpService.createUser(new User("", "vinhruc@gmail", "Vineeth R", "7411419248", "pwd")))
+                .thenThrow(UserNameAlreadyTaken.class);
+
+        User request = new User("", "vinhruc@gmail", "Vineeth R", "7411419248", "pwd");
+        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errCode").value("USERNAME_ALREADY_TAKEN"));
+    }
+
     private record UserWithoutUsername(String name, String phNo, String password) { }
 
     @Test
