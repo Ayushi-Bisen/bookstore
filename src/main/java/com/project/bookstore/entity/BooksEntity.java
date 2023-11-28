@@ -16,15 +16,13 @@ public class BooksEntity {
 
     String name;
 
-    @Column(name = "image_url")
+
     String imageUrl;
 
     Double price;
 
-    @Column(name = "books_available")
     Integer booksAvailable;
 
-    @Column(name = "publication_year")
     String publicationYear;
 
     String description;
