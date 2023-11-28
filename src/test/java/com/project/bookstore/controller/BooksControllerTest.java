@@ -34,8 +34,8 @@ class BooksControllerTest {
 
     @Test
     void addBooks() throws Exception {
-        MockMultipartFile multipartFile = new MockMultipartFile("file","/Users/ayushi.bisen/Downloads/bookstore/src/main/resources/static/books_details.csv","text/csv",
-                new FileInputStream(new File("/Users/ayushi.bisen/Downloads/bookstore/src/main/resources/static/books_details.csv")));
+        MockMultipartFile multipartFile = new MockMultipartFile("file","src/main/resources/static/books_details.csv","text/csv",
+                new FileInputStream(new File("src/main/resources/static/books_details.csv")));
         mockMvc.perform(multipart("/addBooks").file(multipartFile))
                 .andExpect(status().isOk());
 
