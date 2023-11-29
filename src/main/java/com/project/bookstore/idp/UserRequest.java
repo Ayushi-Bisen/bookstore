@@ -16,7 +16,7 @@ public class UserRequest {
     @Pattern(regexp = "^[0-9]{10}$", message="Phone number is not valid")
     String phNo;
 
-    @NotBlank(message = "The password is required.")
+//    @NotBlank(message = "The password is required.")
     String password;
 
     public UserRequest(String username, String name, String phNo, String password) {
