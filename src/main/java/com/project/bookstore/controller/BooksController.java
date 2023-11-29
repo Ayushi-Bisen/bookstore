@@ -1,18 +1,20 @@
 package com.project.bookstore.controller;
 
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.project.bookstore.dto.Book;
-import com.project.bookstore.entity.BooksEntity;
 import com.project.bookstore.service.BookService;
+import com.project.bookstore.dto.Book;
+import com.project.bookstore.dto.Books;
+import com.project.bookstore.entity.BooksEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.util.Collections;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -52,19 +54,14 @@ public class BooksController {
     }
 
     @GetMapping("books")
-    public ResponseEntity<List<Book>> getBooks(@RequestParam(required = false) String search, @RequestParam(required = false) String isbn){
-        if(!isbn.isEmpty()) {
-            Book book = bookService.getBookByIsbn(isbn);
-            return ResponseEntity.ok(Collections.singletonList(book));
-        }
-
+    public ResponseEntity<Books> getBooks(@RequestParam(required = false) String search){
         if (search == null) {
             List<Book> allBooks = bookService.getAllBooks();
-            return ResponseEntity.ok(allBooks);
+            return ResponseEntity.ok(new Books(allBooks));
         }
 
         List<Book> books = bookService.searchBooks(search);
-        return ResponseEntity.ok(books);
+        return ResponseEntity.ok(new Books(books));
     }
 
 }

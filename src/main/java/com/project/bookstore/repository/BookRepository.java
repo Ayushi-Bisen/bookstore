@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<BooksEntity, Integer> {
     List<BooksEntity> findByNameContainingOrAuthorContaining(String nameQuery, String authorQuery);
-
-    BooksEntity findBooksEntitiesByIsbn(String isbn);
 }

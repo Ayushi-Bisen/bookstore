@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.project.bookstore.mapper.BooksMapper.mapBookEntity;
-
 @Service
 public class BookService {
 
@@ -39,10 +37,5 @@ public class BookService {
                 .stream()
                 .map(bookEntity -> new Book(bookEntity.getIsbn(),bookEntity.getAuthor(),bookEntity.getName(),bookEntity.getImageUrlM(),bookEntity.getImageUrlL(),bookEntity.getPrice(),bookEntity.getBooksAvailable(),bookEntity.getPublicationYear(),bookEntity.getDescription(),bookEntity.getRating()))
                 .toList();
-    }
-
-    public Book getBookByIsbn(String isbn) {
-        BooksEntity booksEntity = bookRepository.findBooksEntitiesByIsbn(isbn);
-        return mapBookEntity(booksEntity);
     }
 }
