@@ -34,7 +34,7 @@ public class IDPControllerTest {
                 .thenReturn(new UserResponse("1234", "vinhruc@gmail", "Vineeth R", "7411419248"));
 
         User request = new User("", "vinhruc@gmail", "Vineeth R", "7411419248", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userid").isString())
@@ -49,7 +49,7 @@ public class IDPControllerTest {
                 .thenThrow(UserNameAlreadyTaken.class);
 
         User request = new User("", "vinhruc@gmail", "Vineeth R", "7411419248", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errCode").value("USERNAME_ALREADY_TAKEN"));
@@ -61,13 +61,13 @@ public class IDPControllerTest {
     void createUserShouldReturnBadRequestWhenUsernameIsMissingInRequest() throws Exception {
         // Null Username
         UserWithoutUsername request = new UserWithoutUsername("Vineeth R", "7411419248", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
 
         // Blank Username
         User request1 = new User("", "", "Vineeth R", "7411419248", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -75,7 +75,7 @@ public class IDPControllerTest {
     @Test
     void createUserShouldReturnBadRequestWhenUsernameIsNotMatchingEmailIdFormat() throws Exception {
         User request1 = new User("", "abcd", "Vineeth R", "7411419248", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -87,13 +87,13 @@ public class IDPControllerTest {
     void createUserShouldReturnBadRequestWhenNameIsMissingInRequest() throws Exception {
         // Null Name
         UserWithoutName request = new UserWithoutName("Vineeth R", "7411419248", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
 
         // Blank Name
         User request1 = new User("", "vin@gmail.com", "", "7411419248", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -104,13 +104,13 @@ public class IDPControllerTest {
     void createUserShouldReturnBadRequestWhenPhoneNumberIsMissingInRequest() throws Exception {
         // Null Phone number
         UserWithoutPhoneNumber request = new UserWithoutPhoneNumber("vin-450", "Vineeth R", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
 
         // Blank Phone number
         User request1 = new User("", "vin@gmail.com", "Vineeth R", "", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -118,7 +118,7 @@ public class IDPControllerTest {
     @Test
     void createUserShouldReturnBadRequestWhenPhoneNumberIsNot10Digits() throws Exception {
         User request1 = new User("", "vin@gmail.com", "Vineeth R", "1234", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -126,7 +126,7 @@ public class IDPControllerTest {
     @Test
     void createUserShouldReturnBadRequestWhenPhoneNumberContainsNotNumeric() throws Exception {
         User request1 = new User("", "vin@gmail.com", "Vineeth R", "a741141924", "pwd");
-        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -159,7 +159,7 @@ public class IDPControllerTest {
 //                .thenReturn(new UserResponse("1234", "vinhruc@gmail", "Vineeth R", "7411419248"));
 //
 //        UserWithoutPassword request = new UserWithoutPassword("vin-450", "Vineeth R", "7411419248");
-//        mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
+//        mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
 //                        .accept(MediaType.APPLICATION_JSON))
 //                .andExpect(status().isBadRequest());
 //    }

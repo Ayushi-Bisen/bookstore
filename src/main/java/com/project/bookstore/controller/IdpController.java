@@ -7,6 +7,7 @@ import com.project.bookstore.response.UserResponse;
 import com.project.bookstore.service.IdpService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,11 +22,11 @@ public class IdpController {
         this.idpService = idpService;
     }
 
-    @PostMapping("idp/create-user")
+    @PostMapping("idp/user")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest user) {
         try {
             UserResponse response = idpService.createUser(new User("", user.username, user.name, user.phNo, "pwd"));
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (UserNameAlreadyTaken e) {
             String body =  "{\"errCode\": \"USERNAME_ALREADY_TAKEN\", \"message\":\"" + e.getMessage() + "\"}";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
