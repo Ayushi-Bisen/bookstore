@@ -36,7 +36,7 @@ public class IDPControllerTest {
         User request = new User("", "vinhruc@gmail", "Vineeth R", "7411419248", "pwd");
         mockMvc.perform(post("/idp/user").content(TestUtils.asJsonString(request)).contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.userid").isString())
                 .andExpect(jsonPath("$.username").isString())
                 .andExpect(jsonPath("$.name").isString())
