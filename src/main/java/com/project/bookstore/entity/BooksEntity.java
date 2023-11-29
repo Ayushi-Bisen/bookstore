@@ -8,6 +8,22 @@ import jakarta.persistence.Table;
 @Table(name = "BOOK_DETAILS")
 public class BooksEntity {
 
+    public BooksEntity() {
+    }
+
+    public BooksEntity(String isbn, String name, String description, String author, String publicationYear, String imageUrlM, String imageUrlL, Double price, Integer booksAvailable, Double rating) {
+        this.isbn = isbn;
+        this.name = name;
+        this.description = description;
+        this.author = author;
+        this.publicationYear = publicationYear;
+        this.imageUrlM = imageUrlM;
+        this.imageUrlL = imageUrlL;
+        this.price = price;
+        this.booksAvailable = booksAvailable;
+        this.rating = rating;
+    }
+
     @Id
     private String isbn;
 
@@ -33,80 +49,40 @@ public class BooksEntity {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
     public String getAuthor() {
         return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getImageUrlM() {
         return imageUrlM;
-    }
-
-    public void setImageUrlM(String imageUrlM) {
-        this.imageUrlM = imageUrlM;
     }
 
     public String getImageUrlL() {
         return imageUrlL;
     }
 
-    public void setImageUrlL(String imageUrlL) {
-        this.imageUrlL = imageUrlL;
-    }
-
     public Double getPrice() {
         return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public Integer getBooksAvailable() {
         return booksAvailable;
     }
 
-    public void setBooksAvailable(Integer booksAvailable) {
-        this.booksAvailable = booksAvailable;
-    }
-
     public String getPublicationYear() {
         return publicationYear;
-    }
-
-    public void setPublicationYear(String publicationYear) {
-        this.publicationYear = publicationYear;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Double getRating() {
         return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
     }
 
 

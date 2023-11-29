@@ -11,15 +11,16 @@ import java.util.List;
 @Service
 public class BookService {
 
-
     @Autowired
     public BookRepository bookRepository;
 
     public void addBooks(List<BooksEntity> books) throws Exception {
         try {
-            bookRepository.saveAll(books);
-        } catch (Exception ex)
-        {
+            List<BooksEntity> savedBooks = bookRepository.saveAll(books);
+            if (savedBooks.size() != books.size()) {
+                throw new Exception("Some books not stored in db");
+            }
+        } catch (Exception ex) {
            throw new Exception(ex.getMessage());
         }
     }
