@@ -8,12 +8,14 @@ import com.project.bookstore.entity.BooksEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -47,9 +49,14 @@ public class BooksController {
     }
 
     @GetMapping("books")
-    public ResponseEntity<Books> allBooks(){
-        List<Book> allBooks = bookService.getAllBooks();
-        return ResponseEntity.ok(new Books(allBooks));
+    public ResponseEntity<Books> getBooks(@RequestParam(required = false) String search){
+        if (search == null) {
+            List<Book> allBooks = bookService.getAllBooks();
+            return ResponseEntity.ok(new Books(allBooks));
+        }
+
+        List<Book> books = bookService.searchBooks(search);
+        return ResponseEntity.ok(new Books(books));
     }
 
 }

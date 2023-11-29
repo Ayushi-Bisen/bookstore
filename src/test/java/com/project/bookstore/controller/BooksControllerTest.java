@@ -61,4 +61,17 @@ class BooksControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.books[0].name").value("test"));
     }
+
+
+    @Test
+    void shouldReturnBooksBasedOnSearchText() throws Exception {
+        Mockito.when(bookService.searchBooks("test"))
+                .thenReturn(List.of(new Book("3","vineeth","test","testurlM","testurlL",100.0,2,"year","descr",2.8),
+                        new Book("4","test","vineeth bio","testurlM","testurlL",100.0,2,"year","descr",2.8)));
+
+        mockMvc.perform(get("/books?search=test"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.books[0].isbn").value("3"))
+                .andExpect(jsonPath("$.books[1].isbn").value("4"));
+    }
 }
