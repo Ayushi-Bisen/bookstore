@@ -1,4 +1,4 @@
-package com.project.bookstore.idp;
+package com.project.bookstore.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,14 +13,14 @@ public class UserEntity {
 
     @Id
     @Column(name="id")
-    String userid;
+    public String userid;
 
-    String username,  name,  password;
+    public String username,  name,  password;
 
     @Column(name="ph_no")
-    String phNo;
+    public String phNo;
 
-    UserEntity(String userid, String username, String name, String phNo, String password) {
+    public UserEntity(String userid, String username, String name, String phNo, String password) {
         this.userid = userid;
         this.username = username;
         this.name = name;
@@ -28,6 +28,6 @@ public class UserEntity {
         this.password = password;
     }
 
-    UserEntity() {
+    public UserEntity() {
     }
 }

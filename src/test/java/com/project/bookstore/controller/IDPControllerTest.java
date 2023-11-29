@@ -1,5 +1,10 @@
-package com.project.bookstore.idp;
+package com.project.bookstore.controller;
 
+import com.project.bookstore.controller.IdpController;
+import com.project.bookstore.dto.User;
+import com.project.bookstore.exceptions.UserNameAlreadyTaken;
+import com.project.bookstore.response.UserResponse;
+import com.project.bookstore.service.IdpService;
 import com.project.bookstore.testutils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

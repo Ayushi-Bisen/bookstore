@@ -1,6 +1,6 @@
 package com.project.bookstore.controller;
 
-import com.project.bookstore.BookService;
+import com.project.bookstore.service.BookService;
 import com.project.bookstore.dto.Book;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

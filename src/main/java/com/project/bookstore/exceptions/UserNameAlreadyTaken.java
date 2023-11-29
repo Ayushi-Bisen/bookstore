@@ -1,4 +1,4 @@
-package com.project.bookstore.idp;
+package com.project.bookstore.exceptions;
 
 public class UserNameAlreadyTaken extends Exception {
 

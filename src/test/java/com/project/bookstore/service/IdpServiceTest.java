@@ -1,5 +1,11 @@
-package com.project.bookstore.idp;
+package com.project.bookstore.service;
 
+import com.project.bookstore.dto.User;
+import com.project.bookstore.entity.UserEntity;
+import com.project.bookstore.exceptions.UserNameAlreadyTaken;
+import com.project.bookstore.repository.UserRepository;
+import com.project.bookstore.response.UserResponse;
+import com.project.bookstore.service.IdpService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

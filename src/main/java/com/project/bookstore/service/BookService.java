@@ -1,4 +1,4 @@
-package com.project.bookstore;
+package com.project.bookstore.service;
 
 import com.project.bookstore.dto.Book;
 import com.project.bookstore.entity.BooksEntity;
