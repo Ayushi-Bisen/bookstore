@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -25,8 +24,14 @@ public class BooksController {
 
 
     @PostMapping(value = "/books", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> addBooks(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<String> addBooks(@RequestParam("file") MultipartFile multipartFile) {
         try {
+            if (multipartFile.isEmpty()) {
+                return ResponseEntity.badRequest().body("File not found");
+            }
+            if (!multipartFile.getOriginalFilename().contains(".csv")) {
+                return ResponseEntity.badRequest().body("Invalid file format. Only csv file supported.");
+            }
             List<BooksEntity> books = new CsvToBeanBuilder(new InputStreamReader(multipartFile.getInputStream()))
                     .withSeparator(';')
                     .withType(BooksEntity.class)
