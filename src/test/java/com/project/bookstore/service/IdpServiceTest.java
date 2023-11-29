@@ -40,4 +40,15 @@ public class IdpServiceTest {
             idpService.createUser(new User("00000000-0000-0000-0000-000000000000", "vin-450", "Vineeth R", "phNo", "pwd"));
         }).isInstanceOf(UserNameAlreadyTaken.class);
     }
+
+    @Test
+    void getUserShouldReturnUserAsExpected() {
+        Mockito.when(userRepository.getByUsername("vin-450@g.com"))
+                .thenReturn(new UserEntity("1234", "vin-450@g.com", "Vineeth R", "7411419248", ""));
+
+        IdpService idpService = new IdpService(userRepository);
+        UserResponse serviceResponse = idpService.getUserByUsername("vin-450@g.com");
+
+        Assertions.assertThat(serviceResponse).isEqualTo(new UserResponse("1234", "vin-450@g.com", "Vineeth R", "7411419248"));
+    }
 }

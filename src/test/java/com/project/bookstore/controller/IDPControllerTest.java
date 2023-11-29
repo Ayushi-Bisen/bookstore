@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(IdpController.class)
@@ -128,6 +129,26 @@ public class IDPControllerTest {
         mockMvc.perform(post("/idp/create-user").content(TestUtils.asJsonString(request1)).contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getUserShouldThrowExceptionWhenUsernameNotFoundInHeader() throws Exception {
+        mockMvc.perform(get("/idp/user"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.message").value("username expected in context"));
+    }
+
+    @Test
+    void getUserShouldThrowExceptionWhenUsernameFoundInHeader() throws Exception {
+        Mockito.when(idpService.getUserByUsername("vineeth@gmail.com"))
+                .thenReturn(new UserResponse("1234", "vineeth@gmail.com", "Vineeth R", "7411419248"));
+
+        mockMvc.perform(get("/idp/user").header("username", "vineeth@gmail.com"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userid").value("1234"))
+                .andExpect(jsonPath("$.username").value("vineeth@gmail.com"))
+                .andExpect(jsonPath("$.name").value("Vineeth R"))
+                .andExpect(jsonPath("$.phNo").value("7411419248"));
     }
 
 //    private record UserWithoutPassword(String username, String name, String phNo) { }

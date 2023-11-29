@@ -8,9 +8,9 @@ import com.project.bookstore.service.IdpService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController()
 public class IdpController {
@@ -30,5 +30,17 @@ public class IdpController {
             String body =  "{\"errCode\": \"USERNAME_ALREADY_TAKEN\", \"message\":\"" + e.getMessage() + "\"}";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
         }
+    }
+
+    @GetMapping("idp/user")
+    public ResponseEntity<?> getUser(@RequestHeader Map<String, String> headers) {
+        String username = headers.get("username");
+        if (username == null) {
+            String body =  "{\"errCode\": \"INTERNAL_SERVER_ERROR\", \"message\":\"username expected in context\"}";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+        }
+
+        UserResponse response = idpService.getUserByUsername(username);
+        return ResponseEntity.ok(response);
     }
 }

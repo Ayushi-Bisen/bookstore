@@ -5,6 +5,7 @@ import com.project.bookstore.entity.UserEntity;
 import com.project.bookstore.exceptions.UserNameAlreadyTaken;
 import com.project.bookstore.repository.UserRepository;
 import com.project.bookstore.response.UserResponse;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -26,5 +27,10 @@ public class IdpService {
         UserEntity entity = new UserEntity(UUID.randomUUID().toString(), user.username(), user.name(), user.phNo(), user.password());
         UserEntity repoResponse = userRepository.save(entity);
         return new UserResponse(repoResponse.userid, repoResponse.username, repoResponse.name, repoResponse.phNo);
+    }
+
+    public UserResponse getUserByUsername(String username) throws EntityNotFoundException {
+        UserEntity entity = userRepository.getByUsername(username);
+        return new UserResponse(entity.userid, entity.username, entity.name, entity.phNo);
     }
 }
