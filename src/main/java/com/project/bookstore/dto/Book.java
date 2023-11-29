@@ -1,6 +1,6 @@
 package com.project.bookstore.dto;
 
-public record Book(Integer isbn,String author,String name,String imageUrl,Double price,Integer booksAvailable,String publicationYear,String description,Integer rating)
+public record Book(String isbn, String author, String name, String imageUrlM, String imageUrlL, Double price, Integer booksAvailable, String publicationYear, String description, Double rating)
 {
 
 }

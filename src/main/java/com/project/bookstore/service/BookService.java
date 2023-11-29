@@ -15,18 +15,18 @@ public class BookService {
     @Autowired
     public BookRepository bookRepository;
 
-    public void addBooks(List<BooksEntity> books) {
+    public void addBooks(List<BooksEntity> books) throws Exception {
         try {
             bookRepository.saveAll(books);
         } catch (Exception ex)
         {
-            System.out.println(ex.getMessage());
+           throw new Exception(ex.getMessage());
         }
     }
     public List<Book> getAllBooks() {
         return bookRepository.findAll()
                 .stream()
-                .map(bookEntity -> new Book(bookEntity.getIsbn(),bookEntity.getAuthor(),bookEntity.getName(),bookEntity.getImageUrl(),bookEntity.getPrice(),bookEntity.getBooksAvailable(),bookEntity.getPublicationYear(),bookEntity.getDescription(),bookEntity.getRating()))
+                .map(bookEntity -> new Book(bookEntity.getIsbn(),bookEntity.getAuthor(),bookEntity.getName(),bookEntity.getImageUrlM(),bookEntity.getImageUrlL(),bookEntity.getPrice(),bookEntity.getBooksAvailable(),bookEntity.getPublicationYear(),bookEntity.getDescription(),bookEntity.getRating()))
                 .toList();
 
     }

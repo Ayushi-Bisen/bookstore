@@ -9,22 +9,31 @@ import jakarta.persistence.Table;
 public class BooksEntity {
 
     @Id
-    private Integer isbn;
-
-    private String author;
+    private String isbn;
 
     private String name;
 
+    private String description;
 
-    private String imageUrl;
+    private String author;
+
+    private String publicationYear;
+
+    private String imageUrlM;
+
+    private String imageUrlL;
 
     private Double price;
 
-    public Integer getIsbn() {
+    private Integer booksAvailable;
+
+    private Double rating;
+
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
@@ -44,12 +53,20 @@ public class BooksEntity {
         this.name = name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageUrlM() {
+        return imageUrlM;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrlM(String imageUrlM) {
+        this.imageUrlM = imageUrlM;
+    }
+
+    public String getImageUrlL() {
+        return imageUrlL;
+    }
+
+    public void setImageUrlL(String imageUrlL) {
+        this.imageUrlL = imageUrlL;
     }
 
     public Double getPrice() {
@@ -84,21 +101,13 @@ public class BooksEntity {
         this.description = description;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
-
-    private Integer booksAvailable;
-
-    private String publicationYear;
-
-    private String description;
-
-    private Integer rating;
 
 
 

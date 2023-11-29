@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @RestController
@@ -23,14 +24,26 @@ public class BooksController {
     private BookService bookService;
 
 
-    @PostMapping(value = "/addBooks", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/books", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> addBooks(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        List<BooksEntity> books = new CsvToBeanBuilder(new InputStreamReader(multipartFile.getInputStream()))
-                .withType(BooksEntity.class)
-                .build()
-                .parse();
-        bookService.addBooks(books);
-        return null;
+        try {
+            List<BooksEntity> books = new CsvToBeanBuilder(new InputStreamReader(multipartFile.getInputStream()))
+                    .withSeparator(';')
+                    .withType(BooksEntity.class)
+                    .build()
+                    .parse();
+            bookService.addBooks(books);
+        } catch (FileNotFoundException ex) {
+            System.out.println("File not found. error: "+ ex.getMessage());
+            return ResponseEntity.badRequest().body("File not found");
+        } catch (RuntimeException ex) {
+            System.out.println("Invalid csv format. error: "+ ex.getMessage());
+            return ResponseEntity.internalServerError().body("Invalid csv format");
+        } catch (Exception ex) {
+            System.out.println("Error in loading file. error: "+ ex.getMessage());
+            return ResponseEntity.internalServerError().body("Error occurred in loading file");
+        }
+        return ResponseEntity.ok("Books loaded successfully");
     }
 
     @GetMapping("books")

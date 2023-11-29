@@ -34,9 +34,16 @@ class BooksControllerTest {
     void addBooks() throws Exception {
         MockMultipartFile multipartFile = new MockMultipartFile("file","src/main/resources/static/books_details.csv","text/csv",
                 new FileInputStream(new File("src/main/resources/static/books_details.csv")));
-        mockMvc.perform(multipart("/addBooks").file(multipartFile))
+        mockMvc.perform(multipart("/books").file(multipartFile))
                 .andExpect(status().isOk());
+    }
 
+    @Test
+    void addBooksError() throws Exception {
+        MockMultipartFile multipartFile = new MockMultipartFile("file","src/test/java/com/project/bookstore/resources/invalid_books_details.csv","text/csv",
+                new FileInputStream(new File("src/test/java/com/project/bookstore/resources/invalid_books_details.csv")));
+        mockMvc.perform(multipart("/books").file(multipartFile))
+                .andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -48,7 +55,7 @@ class BooksControllerTest {
     @Test
     void shouldReturnBook() throws Exception {
         Mockito.when(bookService.getAllBooks())
-                .thenReturn(List.of(new Book(3,"test","test","testurl",100.0,2,"year","descr",2)));
+                .thenReturn(List.of(new Book("3","test","test","testurlM","testurlL",100.0,2,"year","descr",2.8)));
 
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())

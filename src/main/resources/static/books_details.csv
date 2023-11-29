@@ -1,2 +1,5 @@
-SI_NO,ISBN,NAME,AUTHOR,IMAGEURL,PRICE,BOOKSAVAILABLE,PUBLICATIONYEAR,DESCRIPTION,RATING
-1,1823,WINGS OF FIRE,APJ ABDUL KALAM,abc.jpg,100,5,2010,Best book for youths,9
+ISBN;NAME;DESCRIPTION;AUTHOR;PUBLICATIONYEAR;IMAGEURLM;IMAGEURLL;PRICE;BOOKSAVAILABLE;RATING
+0195153448;Classical Mythology;Classical Mythology;Mark P. O. Morford;2002;http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg;http://images.amazon.com/images/P/0195153448.01.LZZZZZZZ.jpg;256.22242641102025;0;0.0
+0002005018;Clara Callan;Clara Callan;Richard Bruce Wright;2001;http://images.amazon.com/images/P/0002005018.01.MZZZZZZZ.jpg;http://images.amazon.com/images/P/0002005018.01.LZZZZZZZ.jpg;135.3421165008236;9;4.928571428571429
+0060973129;Decision in Normandy;Decision in Normandy;Carlo D'Este;1991;http://images.amazon.com/images/P/0060973129.01.MZZZZZZZ.jpg;http://images.amazon.com/images/P/0060973129.01.LZZZZZZZ.jpg;433.5962349629304;0;5.0
+0374157065;Flu: The Story of the Great Influenza Pandemic of 1918 and the Search for the Virus That Caused It;Flu: The Story of the Great Influenza Pandemic of 1918 and the Search for the Virus That Caused It;Gina Bari Kolata;1999;http://images.amazon.com/images/P/0374157065.01.MZZZZZZZ.jpg;http://images.amazon.com/images/P/0374157065.01.LZZZZZZZ.jpg;411.03564672400944;5;4.2727272727272725
