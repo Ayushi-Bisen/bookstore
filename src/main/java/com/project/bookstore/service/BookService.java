@@ -31,4 +31,11 @@ public class BookService {
                 .toList();
 
     }
+
+    public List<Book> searchBooks(String search) {
+        return bookRepository.findByNameContainingOrAuthorContaining(search, search)
+                .stream()
+                .map(bookEntity -> new Book(bookEntity.getIsbn(),bookEntity.getAuthor(),bookEntity.getName(),bookEntity.getImageUrlM(),bookEntity.getImageUrlL(),bookEntity.getPrice(),bookEntity.getBooksAvailable(),bookEntity.getPublicationYear(),bookEntity.getDescription(),bookEntity.getRating()))
+                .toList();
+    }
 }
