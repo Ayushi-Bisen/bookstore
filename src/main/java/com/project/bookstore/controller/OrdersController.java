@@ -27,7 +27,7 @@ public class OrdersController {
             BuyResponse buyResponse = orderService.order(username, buyRequest);
             return ResponseEntity.ok(buyResponse);
         } catch (Exception ex) {
-            String body =  "{\"errCode\": \"USER_NOT_REGISTERED\", \"message\":\"" + ex.getMessage() + "\"}";
+            String body =  "{\"errCode\": \"INTERNAL_SERVER_ERROR\", \"message\":\"" + ex.getMessage() + "\"}";
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
         }
     }
