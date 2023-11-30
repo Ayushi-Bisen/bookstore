@@ -3,6 +3,7 @@ package com.project.bookstore.service;
 import com.project.bookstore.dto.User;
 import com.project.bookstore.entity.UserEntity;
 import com.project.bookstore.exceptions.UserNameAlreadyTaken;
+import com.project.bookstore.exceptions.UserNotRegistered;
 import com.project.bookstore.repository.UserRepository;
 import com.project.bookstore.response.UserResponse;
 import com.project.bookstore.service.IdpService;
@@ -42,7 +43,7 @@ public class IdpServiceTest {
     }
 
     @Test
-    void getUserShouldReturnUserAsExpected() {
+    void getUserShouldReturnUserAsExpected() throws Exception {
         Mockito.when(userRepository.getByUsername("vin-450@g.com"))
                 .thenReturn(new UserEntity("1234", "vin-450@g.com", "Vineeth R", "7411419248", ""));
 
@@ -50,5 +51,17 @@ public class IdpServiceTest {
         UserResponse serviceResponse = idpService.getUserByUsername("vin-450@g.com");
 
         Assertions.assertThat(serviceResponse).isEqualTo(new UserResponse("1234", "vin-450@g.com", "Vineeth R", "7411419248"));
+    }
+
+    @Test
+    void getUserShouldThrowExceptionWhenUserNotFound() throws Exception {
+        Mockito.when(userRepository.getByUsername("vin-450@g.com"))
+                .thenReturn(null);
+
+        IdpService idpService = new IdpService(userRepository);
+
+        Assertions.assertThatThrownBy(() -> {
+            idpService.getUserByUsername("vin-450@g.com");
+        }).isInstanceOf(UserNotRegistered.class);
     }
 }

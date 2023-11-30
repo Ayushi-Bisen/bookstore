@@ -3,9 +3,9 @@ package com.project.bookstore.service;
 import com.project.bookstore.dto.User;
 import com.project.bookstore.entity.UserEntity;
 import com.project.bookstore.exceptions.UserNameAlreadyTaken;
+import com.project.bookstore.exceptions.UserNotRegistered;
 import com.project.bookstore.repository.UserRepository;
 import com.project.bookstore.response.UserResponse;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -29,8 +29,12 @@ public class IdpService {
         return new UserResponse(repoResponse.userid, repoResponse.username, repoResponse.name, repoResponse.phNo);
     }
 
-    public UserResponse getUserByUsername(String username) throws EntityNotFoundException {
+    public UserResponse getUserByUsername(String username) throws UserNotRegistered {
         UserEntity entity = userRepository.getByUsername(username);
+        if (entity == null) {
+            throw new UserNotRegistered(username);
+        }
+
         return new UserResponse(entity.userid, entity.username, entity.name, entity.phNo);
     }
 }

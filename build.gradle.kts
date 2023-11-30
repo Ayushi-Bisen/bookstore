@@ -21,6 +21,8 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0-M1")
+	implementation("org.bitbucket.b_c:jose4j:0.9.3")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("org.flywaydb:flyway-core:9.22.3")
 	implementation("org.postgresql:postgresql:42.7.0")
