@@ -85,7 +85,12 @@ public class BooksEntity {
         return rating;
     }
 
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
 }
 

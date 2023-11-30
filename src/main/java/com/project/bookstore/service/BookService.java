@@ -16,6 +16,13 @@ public class BookService {
 
     public void addBooks(List<BooksEntity> books) throws Exception {
         try {
+            for (int i = 0; i < books.size(); i++) {
+                double newPrice = Double.parseDouble(String.format("%.2f", books.get(i).getPrice()));
+                books.get(i).setPrice(newPrice);
+
+                double newRating = Double.parseDouble(String.format("%.2f", books.get(i).getRating()));
+                books.get(i).setRating(newRating);
+            }
             List<BooksEntity> savedBooks = bookRepository.saveAll(books);
             if (savedBooks.size() != books.size()) {
                 throw new Exception("Some books not stored in db");
