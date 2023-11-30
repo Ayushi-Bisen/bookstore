@@ -51,4 +51,18 @@ public class IdpServiceTest {
 
         Assertions.assertThat(serviceResponse).isEqualTo(new UserResponse("1234", "vin-450@g.com", "Vineeth R", "7411419248"));
     }
+
+    @Test
+    void getUserShouldThrowExceptionWhenUserNotFound() {
+        Mockito.when(userRepository.getByUsername("vin-450@g.com"))
+                .thenReturn(new UserEntity("1234", "vin-450@g.com", "Vineeth R", "7411419248", ""));
+
+        IdpService idpService = new IdpService(userRepository);
+        UserResponse serviceResponse = idpService.getUserByUsername("vin-450@g.com");
+
+        Assertions.assertThat(serviceResponse).isEqualTo(new UserResponse("1234", "vin-450@g.com", "Vineeth R", "7411419248"));
+        Assertions.assertThatThrownBy(() -> {
+            idpService.getUserByUsername("vin-450@g.com");
+        }).isInstanceOf(UserNotRegistered.class);
+    }
 }

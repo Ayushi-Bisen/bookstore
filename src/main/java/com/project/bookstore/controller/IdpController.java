@@ -7,11 +7,8 @@ import com.project.bookstore.response.UserResponse;
 import com.project.bookstore.service.IdpService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController()
 public class IdpController {
@@ -34,9 +31,8 @@ public class IdpController {
     }
 
     @GetMapping("idp/user")
-    public ResponseEntity<?> getUser(@RequestHeader Map<String, String> headers) {
-        String username = headers.get("username");
-        if (username == null) {
+    public ResponseEntity<?> getUser(@RequestAttribute("username") String username) {
+        if (username == null || username.equals("")) {
             String body =  "{\"errCode\": \"INTERNAL_SERVER_ERROR\", \"message\":\"username expected in context\"}";
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
         }
