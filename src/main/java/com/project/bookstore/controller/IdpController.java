@@ -33,6 +33,7 @@ public class IdpController {
     }
 
     @GetMapping("idp/user")
+    @CrossOrigin
     public ResponseEntity<?> getUser(@RequestAttribute("username") String username) {
         if (username == null || username.equals("")) {
             String body =  "{\"errCode\": \"INTERNAL_SERVER_ERROR\", \"message\":\"username expected in context\"}";
@@ -44,7 +45,7 @@ public class IdpController {
             return ResponseEntity.ok(response);
         } catch (UserNotRegistered e) {
             String body =  "{\"errCode\": \"USER_NOT_REGISTERED\", \"message\":\"" + e.getMessage() + "\"}";
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
         }
     }
 }
