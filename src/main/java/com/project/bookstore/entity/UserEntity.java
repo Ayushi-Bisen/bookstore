@@ -30,4 +30,8 @@ public class UserEntity {
 
     public UserEntity() {
     }
+
+    public String getUserid() {
+        return userid;
+    }
 }

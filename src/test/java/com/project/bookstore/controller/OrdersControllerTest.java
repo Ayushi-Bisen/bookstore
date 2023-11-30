@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,4 +44,16 @@ class OrdersControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.orderId").isString());
     }*/
+
+    @Test
+    void createOrderShouldReturnUnauthorizedWhenAccessTokenNotPassedInHeader() throws Exception {
+        mockMvc.perform(post("/order"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getOrdersShouldReturnUnauthorizedWhenAccessTokenNotPassedInHeader() throws Exception {
+        mockMvc.perform(get("/orders"))
+                .andExpect(status().isUnauthorized());
+    }
 }

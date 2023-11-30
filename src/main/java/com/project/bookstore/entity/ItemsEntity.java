@@ -19,4 +19,12 @@ public class ItemsEntity {
 
     public ItemsEntity() {
     }
+
+    public ItemsId getId() {
+        return id;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
 }

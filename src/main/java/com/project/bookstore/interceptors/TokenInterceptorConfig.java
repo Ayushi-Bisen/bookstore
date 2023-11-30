@@ -16,6 +16,7 @@ public class TokenInterceptorConfig implements WebMvcConfigurer {
         Map<String, String> protectedUrls = new HashMap<>();
         protectedUrls.put("/idp/user", "GET");
         protectedUrls.put("/order", "POST");
+        protectedUrls.put("/orders", "GET");
         registry.addInterceptor(new TokenInterceptor(protectedUrls));
     }
 }

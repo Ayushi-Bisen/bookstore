@@ -17,4 +17,12 @@ public class ItemsId implements Serializable {
         private String orderId;
 
         private String bookId;
+
+        public String getOrderId() {
+                return orderId;
+        }
+
+        public String getBookId() {
+                return bookId;
+        }
 }
