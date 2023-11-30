@@ -21,6 +21,7 @@ public class IdpController {
     }
 
     @PostMapping("idp/user")
+    @CrossOrigin
     public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest user) {
         try {
             UserResponse response = idpService.createUser(new User("", user.username, user.name, user.phNo, "pwd"));
