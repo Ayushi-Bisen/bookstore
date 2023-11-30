@@ -32,4 +32,11 @@ public class BuyRequest {
     public Double getPrice() {
         return price;
     }
+
+    public BuyRequest(String address, List<ItemRequest> items, String modeOfPayment, Double price) {
+        this.address = address;
+        this.items = items;
+        this.modeOfPayment = modeOfPayment;
+        this.price = price;
+    }
 }

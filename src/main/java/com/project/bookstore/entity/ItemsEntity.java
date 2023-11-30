@@ -10,12 +10,13 @@ public class ItemsEntity {
     @EmbeddedId
     private ItemsId id;
 
-    @OneToOne @MapsId("orderId")
-    private OrderEntity orderId;
-
-    @ManyToOne @MapsId("isbn")
-    private BooksEntity isbn;
-
     private Integer quantity;
 
+    public ItemsEntity(String orderId, String isbn, Integer quantity) {
+        this.id = new ItemsId(orderId, isbn);
+        this.quantity = quantity;
+    }
+
+    public ItemsEntity() {
+    }
 }

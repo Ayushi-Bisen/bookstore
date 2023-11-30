@@ -1,8 +1,4 @@
 package com.project.bookstore.request;
 
-public class ItemRequest {
-
-    private String isbn;
-    private String quantity;
-    private Double price;
+public record ItemRequest(String isbn, int quantity, Double price) {
 }

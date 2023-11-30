@@ -6,6 +6,15 @@ import java.io.Serializable;
 
 @Embeddable
 public class ItemsId implements Serializable {
-        private Integer orderId;
-        private Integer isbn;
+        public ItemsId(String orderId, String isbn) {
+                this.orderId = orderId;
+                this.bookId = isbn;
+        }
+
+        public ItemsId() {
+        }
+
+        private String orderId;
+
+        private String bookId;
 }
