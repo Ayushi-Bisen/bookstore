@@ -30,17 +30,22 @@ public class OrderService {
     @Autowired
     private ItemRepository itemRepository;
 
-    public BuyResponse order(String username, BuyRequest buyRequest) {
-        String orderId = UUID.randomUUID().toString();
-        UserEntity userEntity = userRepository.getByUsername(username);
-        OrderEntity orderEntity = new OrderEntity(orderId, buyRequest.getAddress(), userEntity, buyRequest.getModeOfPayment());
+    public BuyResponse order(String username, BuyRequest buyRequest) throws Exception {
+        try {
+            String orderId = UUID.randomUUID().toString();
 
-        List<ItemsEntity> itemsEntities = buyRequest.getItems().stream().map((item) -> {
-             return new ItemsEntity(orderId, item.isbn(), item.quantity());
-        }).toList();
+            UserEntity userEntity = userRepository.getByUsername(username);
+            OrderEntity orderEntity = new OrderEntity(orderId, buyRequest.getAddress(), userEntity, buyRequest.getModeOfPayment());
 
-        OrderEntity responseEntity =  orderRepository.save(orderEntity);
-        itemRepository.saveAll(itemsEntities);
-        return new BuyResponse(responseEntity.getOrderId());
+            List<ItemsEntity> itemsEntities = buyRequest.getItems().stream().map((item) -> {
+                return new ItemsEntity(orderId, item.isbn(), item.quantity());
+            }).toList();
+
+            OrderEntity responseEntity = orderRepository.save(orderEntity);
+            itemRepository.saveAll(itemsEntities);
+            return new BuyResponse(responseEntity.getOrderId());
+        } catch (Exception ex) {
+            throw new Exception("Error occurred in placing order. Error - " + ex.getMessage());
+        }
     }
 }
