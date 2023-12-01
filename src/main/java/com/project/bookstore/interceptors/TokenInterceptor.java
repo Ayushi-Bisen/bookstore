@@ -52,19 +52,18 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
 
         try {
-//            HttpsJwks httpsJkws = new HttpsJwks("http://localhost:8090/default/jwks");
-//            HttpsJwksVerificationKeyResolver httpsJwksKeyResolver = new HttpsJwksVerificationKeyResolver(httpsJkws);
-//
-//            JwtConsumer jwtConsumer = new JwtConsumerBuilder()
-//                    .setRequireExpirationTime()
-//                    .setVerificationKeyResolver(httpsJwksKeyResolver)
-//                    .setSkipDefaultAudienceValidation()
-//                    .build();
-//
-//            JwtClaims jwtClaims = jwtConsumer.processToClaims(token);
-//
-//            request.setAttribute("username", jwtClaims.getClaimValueAsString("sub"));
-            request.setAttribute("username", "vini@gmail.com");
+            HttpsJwks httpsJkws = new HttpsJwks("http://localhost:8090/default/jwks");
+            HttpsJwksVerificationKeyResolver httpsJwksKeyResolver = new HttpsJwksVerificationKeyResolver(httpsJkws);
+
+            JwtConsumer jwtConsumer = new JwtConsumerBuilder()
+                    .setRequireExpirationTime()
+                    .setVerificationKeyResolver(httpsJwksKeyResolver)
+                    .setSkipDefaultAudienceValidation()
+                    .build();
+
+            JwtClaims jwtClaims = jwtConsumer.processToClaims(token);
+
+            request.setAttribute("username", jwtClaims.getClaimValueAsString("sub"));
         } catch (Exception e) {
             response.sendError(HttpStatus.UNAUTHORIZED.value(), "token validation failed" + e.getMessage());
             return false;
