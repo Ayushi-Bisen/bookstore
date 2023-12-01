@@ -39,7 +39,7 @@ public class OrderService {
             String orderId = UUID.randomUUID().toString();
 
             UserEntity userEntity = userRepository.getByUsername(username);
-            OrderEntity orderEntity = new OrderEntity(orderId, buyRequest.getAddress(), userEntity.getUserid(), buyRequest.getModeOfPayment());
+            OrderEntity orderEntity = new OrderEntity(orderId, buyRequest.getAddress(), userEntity.getUserid(), buyRequest.getModeOfPayment(), buyRequest.getPrice());
 
             List<ItemsEntity> itemsEntities = new ArrayList<>();
             List<String> bookNames = new ArrayList<>();
@@ -48,7 +48,7 @@ public class OrderService {
                 BooksEntity book = bookRepository.getByIsbn(item.isbn());
                 int booksAvailable = book.getBooksAvailable();
                 if (booksAvailable >= item.quantity()) {
-                    itemsEntities.add(new ItemsEntity(orderId, item.isbn(), item.quantity()));
+                    itemsEntities.add(new ItemsEntity(orderId, item.isbn(), item.quantity(), item.price()));
                     book.setBooksAvailable(book.getBooksAvailable() - item.quantity());
                     booksEntities.add(book);
                 } else {
@@ -72,10 +72,10 @@ public class OrderService {
             List<Item> items = itemRepository.findByIdOrderId(order.getOrderId()).stream().map((item) -> {
                 BooksEntity booksEntity = bookRepository.getByIsbn(item.getId().getBookId());
 
-                return new Item(booksEntity.getName(), booksEntity.getAuthor(), item.getQuantity(), booksEntity.getImageUrlM());
+                return new Item(booksEntity.getName(), booksEntity.getAuthor(), item.getQuantity(), booksEntity.getImageUrlM(), item.getPrice());
             }).toList();
 
-            return new Order(order.getOrderId(), order.getAddress(), order.getModeOfPayment(), items, order.getOrderDate());
+            return new Order(order.getOrderId(), order.getAddress(), order.getModeOfPayment(), items, order.getOrderDate(), order.getTotalPrice());
         }).toList();
     }
 }
