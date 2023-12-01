@@ -65,7 +65,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 
             request.setAttribute("username", jwtClaims.getClaimValueAsString("sub"));
         } catch (Exception e) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "invalid token");
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), "token validation failed" + e.getMessage());
             return false;
         }
 
