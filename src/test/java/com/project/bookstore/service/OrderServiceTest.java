@@ -6,6 +6,7 @@ import com.project.bookstore.entity.BooksEntity;
 import com.project.bookstore.entity.ItemsEntity;
 import com.project.bookstore.entity.OrderEntity;
 import com.project.bookstore.entity.UserEntity;
+import com.project.bookstore.exceptions.BookOutOfStockException;
 import com.project.bookstore.repository.BookRepository;
 import com.project.bookstore.repository.ItemRepository;
 import com.project.bookstore.repository.OrderRepository;
@@ -48,13 +49,30 @@ class OrderServiceTest {
     @Test
     void orderSuccessful() throws Exception {
         Mockito.when(userRepository.getByUsername("username")).thenReturn(new UserEntity());
-        OrderEntity orderEntity = new OrderEntity("123", "address", "u1234", "COD");
+        OrderEntity orderEntity = new OrderEntity("123456", "address", "u1234", "COD");
         Mockito.when(orderRepository.save(any())).thenReturn(orderEntity);
+        BooksEntity books = new BooksEntity();
+        books.setBooksAvailable(2);
+        Mockito.when(bookRepository.getByIsbn("123")).thenReturn(books);
         List<ItemRequest> items = new ArrayList<>();
         items.add(new ItemRequest("123", 1, 2.20));
         BuyRequest buyRequest = new BuyRequest("address", items, "COD", 2.22);
         BuyResponse response = orderService.order("username", buyRequest);
-        assertEquals("123", response.orderId());
+        assertEquals("123456", response.orderId());
+    }
+
+    @Test
+    void orderForOutOfStock() throws Exception {
+        Mockito.when(userRepository.getByUsername("username")).thenReturn(new UserEntity());
+        OrderEntity orderEntity = new OrderEntity("123", "address", "u1234", "COD");
+        Mockito.when(orderRepository.save(any())).thenReturn(orderEntity);
+        BooksEntity books = new BooksEntity();
+        books.setBooksAvailable(0);
+        Mockito.when(bookRepository.getByIsbn("123")).thenReturn(books);
+        List<ItemRequest> items = new ArrayList<>();
+        items.add(new ItemRequest("123", 1, 2.20));
+        BuyRequest buyRequest = new BuyRequest("address", items, "COD", 2.22);
+        assertThrows(BookOutOfStockException.class, ()-> orderService.order("username", buyRequest));
     }
 
     @Test
