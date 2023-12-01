@@ -2,6 +2,7 @@ package com.project.bookstore.controller;
 
 import com.project.bookstore.dto.Order;
 import com.project.bookstore.dto.Orders;
+import com.project.bookstore.exceptions.BookOutOfStockException;
 import com.project.bookstore.request.BuyRequest;
 import com.project.bookstore.response.BuyResponse;
 import com.project.bookstore.service.OrderService;
@@ -26,10 +27,12 @@ public class OrdersController {
             String body =  "{\"errCode\": \"INTERNAL_SERVER_ERROR\", \"message\":\"username expected in context\"}";
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
         }
-
         try {
             BuyResponse buyResponse = orderService.order(username, buyRequest);
             return ResponseEntity.ok(buyResponse);
+        } catch (BookOutOfStockException ex) {
+            String body =  "{\"errCode\": \"BOOK_OUT_OF_STOCK\", \"message\":\"" + ex.getMessage() + "\"}";
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(body);
         } catch (Exception ex) {
             String body =  "{\"errCode\": \"INTERNAL_SERVER_ERROR\", \"message\":\"" + ex.getMessage() + "\"}";
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);

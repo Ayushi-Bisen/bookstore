@@ -2,11 +2,11 @@ package com.project.bookstore.service;
 
 import com.project.bookstore.dto.Item;
 import com.project.bookstore.dto.Order;
-import com.project.bookstore.dto.Orders;
 import com.project.bookstore.entity.BooksEntity;
 import com.project.bookstore.entity.ItemsEntity;
 import com.project.bookstore.entity.OrderEntity;
 import com.project.bookstore.entity.UserEntity;
+import com.project.bookstore.exceptions.BookOutOfStockException;
 import com.project.bookstore.repository.BookRepository;
 import com.project.bookstore.repository.ItemRepository;
 import com.project.bookstore.repository.OrderRepository;
@@ -36,22 +36,32 @@ public class OrderService {
     private ItemRepository itemRepository;
 
     public BuyResponse order(String username, BuyRequest buyRequest) throws Exception {
-        try {
             String orderId = UUID.randomUUID().toString();
 
             UserEntity userEntity = userRepository.getByUsername(username);
             OrderEntity orderEntity = new OrderEntity(orderId, buyRequest.getAddress(), userEntity.getUserid(), buyRequest.getModeOfPayment());
 
-            List<ItemsEntity> itemsEntities = buyRequest.getItems().stream().map((item) -> {
-                return new ItemsEntity(orderId, item.isbn(), item.quantity());
-            }).toList();
-
+            List<ItemsEntity> itemsEntities = new ArrayList<>();
+            List<String> bookNames = new ArrayList<>();
+            List<BooksEntity> booksEntities = new ArrayList<>();
+            buyRequest.getItems().forEach((item) -> {
+                BooksEntity book = bookRepository.getByIsbn(item.isbn());
+                int booksAvailable = book.getBooksAvailable();
+                if (booksAvailable >= item.quantity()) {
+                    itemsEntities.add(new ItemsEntity(orderId, item.isbn(), item.quantity()));
+                    book.setBooksAvailable(book.getBooksAvailable() - item.quantity());
+                    booksEntities.add(book);
+                } else {
+                    bookNames.add(book.getName());
+                }
+            });
+            if (bookNames.size() > 0) {
+                throw new BookOutOfStockException(bookNames);
+            }
             OrderEntity responseEntity = orderRepository.save(orderEntity);
             itemRepository.saveAll(itemsEntities);
+            bookRepository.saveAll(booksEntities);
             return new BuyResponse(responseEntity.getOrderId());
-        } catch (Exception ex) {
-            throw new Exception("Error occurred in placing order. Error - " + ex.getMessage());
-        }
     }
 
     public List<Order> getOrders(String username) {
